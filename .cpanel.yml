@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/mby9xz8v1cuf/football_ratings/
+    - /bin/cp * $DEPLOYPATH
