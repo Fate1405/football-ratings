@@ -1,0 +1,11 @@
+.titles {
+    text-align: center;
+}
+
+#main-content, #main-title {
+    margin: 2rem;
+}
+
+.containers {
+    margin-top: 2rem;
+}
