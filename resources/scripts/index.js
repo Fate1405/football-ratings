@@ -21,7 +21,7 @@ function attrSwitcher() {
             break;
         case "Passing":
         image.src = "./resources/media/pass.jpg";
-        break;
+            break;
         case "Dribbling":
             image.src = "./resources/media/dribble.jpg";
             break;
@@ -52,7 +52,7 @@ function updateTable() {
     yellow.innerHTML = data.Yellow;
 }
 
-function playerSwitcher() {
+function playerSwitcher(players) {
     const player1 = document.getElementById("player-1");
     const player2 = document.getElementById("player-2");
 
@@ -67,6 +67,7 @@ function playerSwitcher() {
 function main(winner) {
 
     let data;
+    let players;
 
     let dataReq = new XMLHttpRequest();
 
@@ -74,32 +75,51 @@ function main(winner) {
         data = this.responseText;
     };
 
-    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
+    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php", false);
     dataReq.send();
+
+    for (let i = 0; i < data.length; i++) {
+        players.push(data[i]["Player"]);
+    }
 
     console.log(data);
 
     if (winner) {
-        const player1 = document.getElementById("player-1").innerHTML;
-        const player2 = document.getElementById("player-2").innerHTML;
+        const pagePlayer1 = document.getElementById("player-1").innerHTML;
+        const pagePlayer2 = document.getElementById("player-2").innerHTML;
+        const currentAttr = document.getElementById("attribute").innerHTML;
+        let player1 = data.filter(item => item[0] === pagePlayer1);
+        let player2 = data.filter(item => item[0] === pagePlayer2);
     
+
     
-        let expected1 = 1 / (1 + 10 ** ((data[player2] - data[player1]) / C.D));
-        let expected2 = 1 / (1 + 10 ** ((data[player1] - data[player2]) / C.D));
+        let expected1 = 1 / (1 + 10 ** ((player2[currentAttr] - player1[currentAttr]) / C.D));
+        let expected2 = 1 / (1 + 10 ** ((player1[currentAttr] - player2[currentAttr]) / C.D));
     
         if (winner === 1) {
     
-            data[player1] += Math.floor(C.K * (1 - expected1));
-            data[player2] += Math.floor(C.K * (0 - expected2));
+            player1[currentAttr] += Math.floor(C.K * (1 - expected1));
+            player2[currentAttr] += Math.floor(C.K * (0 - expected2));
     
         } else if (winner === 2) {
     
-            data[player1] += Math.floor(C.K * (0 - expected1));
-            data[player2] += Math.floor(C.K * (1 - expected2));
+            player1[currentAttr] += Math.floor(C.K * (0 - expected1));
+            player2[currentAttr] += Math.floor(C.K * (1 - expected2));
         }
+
+        let sendData1 = new XMLHttpRequest();
+
+        sendData1.open("GET", "https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=" + player1[currentAttr], false);
+        sendData1.send();
+
+        let sendData2 = new XMLHttpRequest();
+
+        sendData2.open("GET", "https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=" + player2[currentAttr], false);
+        sendData1.send();
+
     }
 
-    playerSwitcher();
+    playerSwitcher(players);
     updateTable();
     attrSwitcher();
 }
