@@ -59,52 +59,54 @@ function main(winner) {
           data = this.responseText;
       };
 
-    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
-    dataReq.send();
-
-    for (let i = 0; i < data.length; i++) {
-        players.push(data[i]["Player"]);
-    }
-
-    console.log(data);
-
-    if (winner) {
-        const pagePlayer1 = document.getElementById("player-1").innerHTML;
-        const pagePlayer2 = document.getElementById("player-2").innerHTML;
-        const currentAttr = document.getElementById("attribute").innerHTML;
-        let player1 = data.filter(item => item["Player"] === pagePlayer1);
-        let player2 = data.filter(item => item["Player"] === pagePlayer2);
-        let player1App = player1["Appearances"];
-        let player2App = player2["Appearances"];
-    
-
-    
-        let expected1 = 1 / (1 + 10 ** ((player2[currentAttr] - player1[currentAttr]) / C.D));
-        let expected2 = 1 / (1 + 10 ** ((player1[currentAttr] - player2[currentAttr]) / C.D));
-    
-        if (winner === 1) {
-    
-            player1[currentAttr] += Math.floor(C.K * (1 - expected1));
-            player2[currentAttr] += Math.floor(C.K * (0 - expected2));
-    
-        } else if (winner === 2) {
-    
-            player1[currentAttr] += Math.floor(C.K * (0 - expected1));
-            player2[currentAttr] += Math.floor(C.K * (1 - expected2));
+    try {
+        dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
+        dataReq.send();
+    } finally {
+        for (let i = 0; i < data.length; i++) {
+            players.push(data[i]["Player"]);
         }
-
-        let sendData = new XMLHttpRequest();
-        sendData.onreadystatechange = function() {
-              console.log("Working");
-          };
-
-        sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
-        sendData.send();
-
+    
+        console.log(data);
+    
+        if (winner) {
+            const pagePlayer1 = document.getElementById("player-1").innerHTML;
+            const pagePlayer2 = document.getElementById("player-2").innerHTML;
+            const currentAttr = document.getElementById("attribute").innerHTML;
+            let player1 = data.filter(item => item["Player"] === pagePlayer1);
+            let player2 = data.filter(item => item["Player"] === pagePlayer2);
+            let player1App = player1["Appearances"];
+            let player2App = player2["Appearances"];
+        
+    
+        
+            let expected1 = 1 / (1 + 10 ** ((player2[currentAttr] - player1[currentAttr]) / C.D));
+            let expected2 = 1 / (1 + 10 ** ((player1[currentAttr] - player2[currentAttr]) / C.D));
+        
+            if (winner === 1) {
+        
+                player1[currentAttr] += Math.floor(C.K * (1 - expected1));
+                player2[currentAttr] += Math.floor(C.K * (0 - expected2));
+        
+            } else if (winner === 2) {
+        
+                player1[currentAttr] += Math.floor(C.K * (0 - expected1));
+                player2[currentAttr] += Math.floor(C.K * (1 - expected2));
+            }
+    
+            let sendData = new XMLHttpRequest();
+            sendData.onreadystatechange = function() {
+                  console.log("Working");
+              };
+    
+            sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
+            sendData.send();
+    
+        }
+    
+        playerSwitcher(players);
+        attrSwitcher();
     }
-
-    playerSwitcher(players);
-    attrSwitcher();
 }
 
 main(0);
