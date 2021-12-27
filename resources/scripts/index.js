@@ -55,10 +55,8 @@ function main(winner) {
 
     let dataReq = new XMLHttpRequest();
     dataReq.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
           console.log("Working");
           data = this.responseText;
-        }
       };
 
     dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
@@ -97,9 +95,7 @@ function main(winner) {
 
         let sendData = new XMLHttpRequest();
         sendData.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
               console.log("Working");
-            }
           };
 
         sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
