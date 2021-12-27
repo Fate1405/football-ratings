@@ -54,12 +54,14 @@ function main(winner) {
     let players;
 
     let dataReq = new XMLHttpRequest();
+    dataReq.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log("Working");
+          data = this.responseText;
+        }
+      };
 
-    dataReq.onload = function() {
-        data = this.responseText;
-    };
-
-    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php", false);
+    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
     dataReq.send();
 
     for (let i = 0; i < data.length; i++) {
@@ -94,6 +96,11 @@ function main(winner) {
         }
 
         let sendData = new XMLHttpRequest();
+        sendData.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              console.log("Working");
+            }
+          };
 
         sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
         sendData.send();
