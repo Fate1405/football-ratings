@@ -1,7 +1,3 @@
-let data = {Red: 1000, Green: 1000, Blue: 1000, Yellow: 1000};
-
-const players = Object.keys(data);
-
 const attributes = ["Pace", "Shooting", "Passing", "Dribbling", "Defending", "Physicality", "Keeping"];
 
 const C = {D: 400, K: 32};
@@ -40,18 +36,6 @@ function attrSwitcher() {
     }
 }
 
-function updateTable() {
-    const red = document.getElementById("red");
-    const green = document.getElementById("green");
-    const blue = document.getElementById("blue");
-    const yellow = document.getElementById("yellow");
-
-    red.innerHTML = data.Red;
-    green.innerHTML = data.Green;
-    blue.innerHTML = data.Blue;
-    yellow.innerHTML = data.Yellow;
-}
-
 function playerSwitcher(players) {
     const player1 = document.getElementById("player-1");
     const player2 = document.getElementById("player-2");
@@ -88,8 +72,10 @@ function main(winner) {
         const pagePlayer1 = document.getElementById("player-1").innerHTML;
         const pagePlayer2 = document.getElementById("player-2").innerHTML;
         const currentAttr = document.getElementById("attribute").innerHTML;
-        let player1 = data.filter(item => item[0] === pagePlayer1);
-        let player2 = data.filter(item => item[0] === pagePlayer2);
+        let player1 = data.filter(item => item["Player"] === pagePlayer1);
+        let player2 = data.filter(item => item["Player"] === pagePlayer2);
+        let player1App = player1["Appearances"];
+        let player2App = player2["Appearances"];
     
 
     
@@ -107,20 +93,14 @@ function main(winner) {
             player2[currentAttr] += Math.floor(C.K * (1 - expected2));
         }
 
-        let sendData1 = new XMLHttpRequest();
+        let sendData = new XMLHttpRequest();
 
-        sendData1.open("GET", "https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=" + player1[currentAttr], false);
-        sendData1.send();
-
-        let sendData2 = new XMLHttpRequest();
-
-        sendData2.open("GET", "https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=" + player2[currentAttr], false);
-        sendData1.send();
+        sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
+        sendData.send();
 
     }
 
     playerSwitcher(players);
-    updateTable();
     attrSwitcher();
 }
 
