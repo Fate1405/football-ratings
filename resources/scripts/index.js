@@ -61,6 +61,12 @@ function main(winner) {
             players.push(data[i]["Player"]);
         }
 
+        for (let i = 0; i < data.length; i++) {
+            for (let [key, val] of Object.entries(data[i])) {
+                data[i][key] = parseInt(val);
+            }
+        }
+
         console.log("Info:");
 
         console.log(data);
@@ -75,8 +81,8 @@ function main(winner) {
             const currentAttr = document.getElementById("attribute").innerHTML;
             let player1 = data.filter(item => item["Player"] === pagePlayer1)[0];
             let player2 = data.filter(item => item["Player"] === pagePlayer2)[0];
-            let player1App = player1["Appearances"];
-            let player2App = player2["Appearances"];
+            let player1App = player1["Appearances"] + 1;
+            let player2App = player2["Appearances"] + 1;
         
             let expected1 = 1 / (1 + 10 ** ((player2[currentAttr] - player1[currentAttr]) / C.D));
             let expected2 = 1 / (1 + 10 ** ((player1[currentAttr] - player2[currentAttr]) / C.D));
@@ -97,7 +103,7 @@ function main(winner) {
                     console.log("Send Working...");
                 };
     
-            sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`);
+            sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App}_${player2App}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`);
             sendData.send();
     
         }
