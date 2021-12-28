@@ -52,16 +52,15 @@ function main(winner) {
 
     let dataReq = new XMLHttpRequest();
     dataReq.onreadystatechange = function() {
-        let data;
-        let players;
+        let players = [];
 
 
         console.log("Get Working...");
-        data = this.responseText;
+        let data = this.responseText;
         for (let i = 0; i < data.length; i++) {
             players.push(data[i]["Player"]);
         }
-        
+
         if (winner) {
             
             const pagePlayer1 = document.getElementById("player-1").innerHTML;
