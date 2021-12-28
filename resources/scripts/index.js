@@ -56,18 +56,25 @@ function main(winner) {
 
 
         console.log("Get Working...");
-        let data = this.responseText;
+        let data = JSON.parse(this.responseText);
         for (let i = 0; i < data.length; i++) {
             players.push(data[i]["Player"]);
         }
+
+        console.log("Info:");
+
+        console.log(data);
+        console.log(players);
+
+        console.log("Info Done")
 
         if (winner) {
             
             const pagePlayer1 = document.getElementById("player-1").innerHTML;
             const pagePlayer2 = document.getElementById("player-2").innerHTML;
             const currentAttr = document.getElementById("attribute").innerHTML;
-            let player1 = data.filter(item => item["Player"] === pagePlayer1);
-            let player2 = data.filter(item => item["Player"] === pagePlayer2);
+            let player1 = data.filter(item => item["Player"] === pagePlayer1)[0];
+            let player2 = data.filter(item => item["Player"] === pagePlayer2)[0];
             let player1App = player1["Appearances"];
             let player2App = player2["Appearances"];
         
