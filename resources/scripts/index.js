@@ -50,26 +50,20 @@ function playerSwitcher(players) {
 
 function main(winner) {
 
-    let data;
-    let players;
-
     let dataReq = new XMLHttpRequest();
     dataReq.onreadystatechange = function() {
-          console.log("Working");
-          data = this.responseText;
-      };
+        let data;
+        let players;
 
-    try {
-        dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
-        dataReq.send();
-    } finally {
+
+        console.log("Get Working...");
+        data = this.responseText;
         for (let i = 0; i < data.length; i++) {
             players.push(data[i]["Player"]);
         }
-    
-        console.log(data);
-    
+        
         if (winner) {
+            
             const pagePlayer1 = document.getElementById("player-1").innerHTML;
             const pagePlayer2 = document.getElementById("player-2").innerHTML;
             const currentAttr = document.getElementById("attribute").innerHTML;
@@ -77,8 +71,6 @@ function main(winner) {
             let player2 = data.filter(item => item["Player"] === pagePlayer2);
             let player1App = player1["Appearances"];
             let player2App = player2["Appearances"];
-        
-    
         
             let expected1 = 1 / (1 + 10 ** ((player2[currentAttr] - player1[currentAttr]) / C.D));
             let expected2 = 1 / (1 + 10 ** ((player1[currentAttr] - player2[currentAttr]) / C.D));
@@ -96,17 +88,21 @@ function main(winner) {
     
             let sendData = new XMLHttpRequest();
             sendData.onreadystatechange = function() {
-                  console.log("Working");
-              };
+                    console.log("Send Working...");
+                };
     
-            sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`, false);
+            sendData.open("GET", `https://ratings.zuiderheide.com/resources/scripts/send-data.php?q=${player1[currentAttr]}_${player2[currentAttr]}_${player1App++}_${player2App++}_${currentAttr}_${pagePlayer1}_${pagePlayer2}`);
             sendData.send();
     
         }
     
         playerSwitcher(players);
         attrSwitcher();
-    }
+    };
+
+    dataReq.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
+    dataReq.send();
+    
 }
 
 main(0);
