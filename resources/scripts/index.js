@@ -63,6 +63,7 @@ function main(winner) {
 
         for (let i = 0; i < data.length; i++) {
             for (let [key, val] of Object.entries(data[i])) {
+                if (key !== "Player")
                 data[i][key] = parseInt(val);
             }
         }
