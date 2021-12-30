@@ -1,7 +1,6 @@
 let getData = new XMLHttpRequest();
 
-getData.onreadystatechange = () => {
-    const attribute = obj.innerHTML;
+getData.onreadystatechange = (attribute) => {
 
     console.log("Get Working...");
     let data = JSON.parse(this.responseText);
@@ -74,6 +73,7 @@ getData.onreadystatechange = () => {
 // Charting
 
 function main(obj) {
+    const attribute = obj.innerHTML;
     getData.open("GET", "https://ratings.zuiderheide.com/resources/scripts/get-data.php");
     getData.send();
 }
