@@ -39,6 +39,8 @@ function attrSwitcher() {
 function playerSwitcher(players) {
     const player1 = document.getElementById("player-1");
     const player2 = document.getElementById("player-2");
+    const player1image = document.getElementById("player-1-img");
+    const player2image = document.getElementById("player-2-img");
 
     let choice1 = players[Math.floor(Math.random() * players.length)];
     newArr = players.filter(item => item !== choice1);
