@@ -3,7 +3,7 @@ let getData = new XMLHttpRequest();
 getData.onreadystatechange = (attribute) => {
 
     console.log("Get Working...");
-    let data = JSON.parse(this.responseText);
+    let data = JSON.parse(getData.responseText);
 
     for (let i = 0; i < data.length; i++) {
         for (let [key, val] of Object.entries(data[i])) {
@@ -32,6 +32,15 @@ getData.onreadystatechange = (attribute) => {
     }
 
     const ctx = document.getElementById('myChart');
+
+    ctx.remove();
+
+    const ctx = document.createElement("canvas");
+
+    ctx.setAttribute("width", 600);
+    ctx.setAttribute("height", 600);
+    ctx.setAttribute("width", 600);
+    ctx.id = "myChart";
 
     const myChart = new Chart(ctx, {
         type: 'bar',
