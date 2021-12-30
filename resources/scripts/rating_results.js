@@ -31,16 +31,17 @@ getData.onreadystatechange = (attribute) => {
         keys.push(newData[i][0]);
     }
 
-    const ctx = document.getElementById('myChart');
+    const chart = document.getElementById("myChart");
 
-    ctx.remove();
+    chart.remove();
 
     const ctx = document.createElement("canvas");
 
     ctx.setAttribute("width", 600);
     ctx.setAttribute("height", 600);
-    ctx.setAttribute("width", 600);
     ctx.id = "myChart";
+
+    document.getElementById("figure").appendChild(ctx);
 
     const myChart = new Chart(ctx, {
         type: 'bar',
