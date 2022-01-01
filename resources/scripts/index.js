@@ -70,13 +70,6 @@ function main(winner) {
             }
         }
 
-        console.log("Info:");
-
-        console.log(data);
-        console.log(players);
-
-        console.log("Info Done")
-
         if (winner) {
             
             const pagePlayer1 = document.getElementById("player-1").innerHTML;
