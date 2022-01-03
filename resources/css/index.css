@@ -1,5 +1,15 @@
+@font-face {
+    font-family: Nunito;
+    src: url(../fonts/Nunito.ttf);
+}
+
+* {
+    font-family: Nunito;
+}
+
 .titles {
     text-align: center;
+    font-weight: 700;
 }
 
 #main-content, #main-title {
@@ -8,4 +18,22 @@
 
 .containers {
     margin-top: 2rem;
+}
+
+#carousel {
+    width: 20rem;
+    height: 20rem;
+}
+
+#title-desc {
+    margin-bottom: 4rem;
+}
+
+.carousel-caption p, .carousel-caption h5 {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.carousel-caption p {
+    border-radius: 50%;
 }
