@@ -1,5 +1,7 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+
 $q = $_REQUEST["q"];
 
 $data = explode("_", $q);

@@ -1,5 +1,7 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+
 $servername = "localhost";
 $username = "fate1405";
 $password = ")qvIfQ(z1u?l";
