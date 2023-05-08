@@ -32,13 +32,4 @@ if ($result = $conn->query($sql)) {
     echo "Failure";
 }
 
-
-echo "Should work... {$data[0]}";
-echo "Should work... {$data[1]}";
-echo "Should work... {$data[2]}";
-echo "Should work... {$data[3]}";
-echo "Should work... {$data[4]}";
-echo "Should work... {$data[5]}";
-echo "Should work... {$data[6]}";
-
 ?>
